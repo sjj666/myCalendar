@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>日历</title>
+    <link rel="stylesheet" href="style/font-awesome.min.css">
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="calendar">
+        <header>
+            <span class="left" id="btn_prev">
+                <i class="fa fa-angle-left"></i> 
+            </span>
+            <font></font>
+            <span class="right" id="btn_next">
+                <i class="fa fa-angle-right"></i>
+            </span>
+        </header>
+        <div class="day">
+            <ul class='clear'>
+                <li>日</li>
+                <li>一</li>
+                <li>二</li>
+                <li>三</li>
+                <li>四</li>
+                <li>五</li>
+                <li>六</li>
+            </ul>
+        </div>
+        <div class="content">
+            <ul class="clear">
+
+            </ul>
+        </div>
+        <footer>
+            <button type="" id="btn">确&nbsp;定</button>
+        </footer>
+    </div>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script>
+        $(function () {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = current = date.getMonth() + 1;
+            var currentMonthDay = date.getDate();
+            var currentDate = "";
+            var currentLastDay = "";
+            var str = "";
+            var currentGetDate = "";
+            ///循环输出当前月份的天数
+            var currentMonthDays = function () {
+                ///每次执行前先清空时间列表
+                str = "";
+                date.setFullYear(year);///获取当前年份
+                date.setMonth(month);///获取当前月份
+                var currentDay = date.getDate();
+                var lastDay = date.setDate(0);///获取当前月的最后一天
+                currentLastDay = date.getDate();
+                var firstDay = date.setDate(1);
+                currentFirstDay = date.getDay();
+                if (currentFirstDay >= 0) {
+                    for (var j = 0; j < currentFirstDay; j++) {
+                        str += "<li></li>";
+                    }
+                    for (var i = 1; i <= currentLastDay; i++) {
+                        if (month == current && currentMonthDay == i) {
+                            str += "<li><span style='background:#fff;color:#94e4e2;' id=" + i + ">" + i + "</span></li>";
+                        } else if (currentDay == i && month != current) {
+                            str += "<li><span style='background:#f3f3f3;' id=" + i + ">" + i + "</span></li>";
+                        } else {
+                            str += "<li><span id=" + i + ">" + i + "</span></li>";
+                        }
+                    }
+                }
+                currentDate = year + "&nbsp;年&nbsp;" + month + "月";//将当前年月连接成字符串
+                $("header font").html(currentDate);//输出当前年月
+                $(".content ul").html(str);//输出当前月份的天数
+            }
+            currentMonthDays();
+            ///左键头月份减减
+            $("#btn_prev").click(function () {
+                $("header font").html("");//每次点击先清空
+                $(".content ul").html("");
+                if (month > 1) {
+                    month--;
+                } else {
+                    month = 12;
+                    year--;
+                }
+                currentMonthDays();
+                // console.log($(".content ul li span"));
+            });
+            ///右箭头月份加加
+            $("#btn_next").click(function () {
+                $("header font").html("");//每次点击先清空
+                $(".content ul").html("");
+                if (month < 12) {
+                    month++;
+                } else {
+                    month = 1;
+                    year++;
+                }
+                currentMonthDays();
+            });
+            ///点击之后输出选中的年月日
+            $("body").on("click", ".content ul li span", function () {
+                currentMonthDays();
+                if (month < 10 && $(this).attr("id") < 10) {
+                    currentGetDate = year + "-0" + month + "-0" + $(this).attr("id");
+                } else if (month < 10 && $(this).attr("id") >= 10) {
+                    currentGetDate = year + "-0" + month + "-" + $(this).attr("id");
+                } else if (month >= 10 && $(this).attr("id") < 10) {
+                    currentGetDate = year + "-" + month + "-0" + $(this).attr("id");
+                } else {
+                    currentGetDate = year + "-" + month + "-" + $(this).attr("id");
+                }
+                 console.log(currentGetDate);
+                $(".content ul li span").removeClass('current').eq($(this).attr("id") - 1).addClass("current");
+            });
+            ///点击确定按钮可以获取当前选中的年月日信息
+            $("#btn").click(function () {
+                if ($(".content ul li span.current")) {
+                    console.log(currentGetDate);
+                };
+            })
+        })
+    </script>
+</body>
+
+</html>

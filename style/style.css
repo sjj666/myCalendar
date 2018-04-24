@@ -1,0 +1,74 @@
+    *{
+        margin:0;
+        padding: 0;
+        list-style: none;
+    }
+    .clear::after,.clear::before{
+        display: block;
+        clear: both;
+        content: '';
+    }
+    .calendar{
+        height: 100vh;
+        padding:0 20px;
+        box-sizing: border-box;
+        background: url(../images/2.png)no-repeat;
+        background-size: cover;
+    }
+    .calendar header{
+        line-height: 45px;
+        text-align:center;
+        padding-top: 20px
+    }
+    .day ul li,.content ul li{
+        float: left;
+        width:14.2%;
+        text-align: center;
+        line-height: 45px;
+    }
+    .day ul li{
+        margin-bottom: 10px;
+        line-height: 50px;
+    }
+    header span{
+        font-size:25px;
+        cursor: pointer;
+        padding:0 5px;
+        box-sizing: border-box;
+    }
+    header span.left{
+        float:left;
+    }
+    header span.right{
+        float:right;
+    }
+    .content ul li{
+        margin:10px 0;
+    }
+    .content ul li span{
+        display: inline-block;
+        width:35px;
+        line-height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    .content ul li span.current{
+        background: #ddd;
+        color: #545454;
+    }
+    footer {
+        text-align: right;
+        margin-top:10px;
+    }
+    footer button{
+        display: inline-block;
+        line-height: 35px;
+        padding:0 20px;
+        background: none;
+        outline: none;
+        border:1px solid #ddd;
+        font-size: 16px;
+        border-radius: 5px;
+        color: #999;
+        cursor: pointer;
+    }
